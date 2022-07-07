@@ -42,17 +42,21 @@ public class ArrayStorage {
         int remainingElements = storage.length - (count + 1);
         System.arraycopy(storage, 0, arrNewStorage, 0, count);
         System.arraycopy(storage, count + 1, arrNewStorage, count, remainingElements);
-        //System.out.println("Elements -- "  + Arrays.toString(arrDestination));
+        //System.out.println("Elements -- "  + Arrays.toString(arrNewStorage));
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
+        Resume[] newArr = new Resume[k];
+
         for (int i = 0; i < k; i++) {
-            return new Resume[i];
+            if (storage != null) {
+                newArr[i] = storage[i];
+            }
         }
-        return null;
+        return newArr;
     }
 
 
