@@ -5,45 +5,34 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    int countSizeArr = 0;
+    int count = 0;
 
     void clear() {
         System.out.println("After Clearing Array:");
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, count, null);
     }
 
     void save(Resume r) {
-
-        for (int i = 0; i <= countSizeArr; i++) {
+        for (int i = 0; i <= count; i++) {
             if (storage[i] == null) {
                 storage[i] = r;
             }
         }
-        countSizeArr++;
+        count++;
     }
 
-    String get(String uuid) {
-        for (Resume resume : storage) {
-            if (uuid.equals(resume.toString())) {
-                return resume.toString();
-            } else {
-                return "такого значения нет";
+    Resume get(String uuid) {
+        for (int i = 0; i < count; i++) {
+            if (uuid.equals(storage[i].toString())) {
+                return storage[i];
             }
         }
         return null;
     }
 
     void delete(String uuid) {
-        Resume[] arrNewStorage = new Resume[storage.length - 1];
         int count = 0;
-        for (int i = 0; i < storage.length; i++) {
-            if (uuid.equals(storage[i].toString())) {
-                count = i;
-                break;
-            }
-        }
         int remainingElements = storage.length - (count + 1);
-        //System.arraycopy(storage, 0, arrNewStorage, 0, count);
         System.arraycopy(storage, count + 1, storage, count, remainingElements);
     }
 
@@ -52,16 +41,11 @@ public class ArrayStorage {
      */
 
     Resume[] getAll() {
-        Resume[] newArr = new Resume[countSizeArr];
-        for (int i = 0; i < countSizeArr; i++) {
-            if (storage != null) {
-                newArr[i] = storage[i];
-            }
-        }
+        Resume[] newArr = Arrays.copyOf(storage, count);
         return newArr;
     }
 
     int size() {
-        return countSizeArr;
+        return count;
     }
 }
