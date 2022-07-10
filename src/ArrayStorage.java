@@ -1,35 +1,33 @@
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    int k = 0;
+    int countSizeArr = 0;
 
-    //Resume[] arrNewStorage = new Resume[storage.length - 1];
     void clear() {
-        //storage = null;
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] != null) {
-                storage[i] = null;
-            }
-        }
+        System.out.println("After Clearing Array:");
+        Arrays.fill(storage, null);
     }
 
     void save(Resume r) {
 
-        for (int i = 0; i <= k; i++) {
+        for (int i = 0; i <= countSizeArr; i++) {
             if (storage[i] == null) {
                 storage[i] = r;
             }
         }
-        k++;
+        countSizeArr++;
     }
 
-    //Resume[] newArr = new Resume[k];
-    Resume get(String uuid) {
-        for (int i = 0; i < storage.length; i++) {
-            if (uuid.equals(storage[i].toString())) {
-                return storage[i];
+    String get(String uuid) {
+        for (Resume resume : storage) {
+            if (uuid.equals(resume.toString())) {
+                return resume.toString();
+            } else {
+                return "такого значения нет";
             }
         }
         return null;
@@ -54,8 +52,8 @@ public class ArrayStorage {
      */
 
     Resume[] getAll() {
-        Resume[] newArr = new Resume[k];
-        for (int i = 0; i < k; i++) {
+        Resume[] newArr = new Resume[countSizeArr];
+        for (int i = 0; i < countSizeArr; i++) {
             if (storage != null) {
                 newArr[i] = storage[i];
             }
@@ -64,6 +62,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        return k;
+        return countSizeArr;
     }
 }
