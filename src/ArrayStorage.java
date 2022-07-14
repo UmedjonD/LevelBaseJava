@@ -13,11 +13,7 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        for (int i = 0; i <= count; i++) {
-            if (storage[i] == null) {
-                storage[i] = r;
-            }
-        }
+        storage[count] = r;
         count++;
     }
 
@@ -31,9 +27,19 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        int count = 0;
-        int remainingElements = storage.length - (count + 1);
-        System.arraycopy(storage, count + 1, storage, count, remainingElements);
+        int i = 0;
+        try {
+            for (; i < count; i++) {
+                if (uuid.equals(storage[i].toString())) {
+                    break;
+                }
+            }
+        } catch (NullPointerException e) {
+            System.err.println("there is no such resume");
+        }
+
+        int remainingElements = storage.length - (i + 1);
+        System.arraycopy(storage, i + 1, storage, i, remainingElements);
     }
 
     /**
@@ -41,8 +47,7 @@ public class ArrayStorage {
      */
 
     Resume[] getAll() {
-        Resume[] newArr = Arrays.copyOf(storage, count);
-        return newArr;
+        return Arrays.copyOf(storage, count);
     }
 
     int size() {
