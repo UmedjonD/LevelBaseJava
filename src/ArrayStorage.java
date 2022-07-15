@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
     int count = 0;
+    Resume[] newStorage = null;
 
     void clear() {
         System.out.println("After Clearing Array:");
@@ -27,19 +28,23 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        int i = 0;
         try {
-            for (; i < count; i++) {
+            for (int i = 0; i < count; i++) {
                 if (uuid.equals(storage[i].toString())) {
+                    newStorage = new Resume[storage.length - 1];
+                    for (int index = 0; index < i; index++) {
+                        newStorage[index] = storage[index];
+                    }
+                    for (int j = i; j < storage.length - 1; j++) {
+                        newStorage[j] = storage[j + 1];
+                    }
                     break;
                 }
             }
         } catch (NullPointerException e) {
             System.err.println("there is no such resume");
         }
-
-        int remainingElements = storage.length - (i + 1);
-        System.arraycopy(storage, i + 1, storage, i, remainingElements);
+        storage = newStorage.clone();
     }
 
     /**
